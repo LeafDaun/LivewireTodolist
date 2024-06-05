@@ -23,10 +23,10 @@ class Todolist extends Component
     public function create() 
     {
         // urutan logic : 1.validate, 2.create todo, 3.clear input, 4.send flash message
-
+        
+        $validated = $this->validateOnly('name');
+        
         try {
-            
-            $validated = $this->validateOnly('name');
             Todo::create($validated);
             $this->reset('name');
             session()->flash('success', 'created berhasil..');
@@ -68,9 +68,9 @@ class Todolist extends Component
 
     public function update()
     {
+        $this->validateOnly('editingTodoName');
         try {
 
-            $this->validateOnly('editingTodoName');
             Todo::find($this->editingTodoID)->update(
                 [ 'name' => $this->editingTodoName]
             );
